@@ -24,8 +24,8 @@ def sort_dataFrame(data, df_extracted):
     df_extracted['Id'] = keys
     return df_extracted.sort_values(by=['Id'])
 
-dev_data = read_hdf5_to_dict(file_path="../data/audio_features_development.h5")
-eval_data = read_hdf5_to_dict(file_path="../data/audio_features_evaluation.h5")
+dev_data = read_hdf5_to_dict(file_path="main/data/audio_features_development.h5")
+eval_data = read_hdf5_to_dict(file_path="main/data/audio_features_evaluation.h5")
 
 extracted_dev = np.zeros((240))
 for k in dev_data:
@@ -52,5 +52,5 @@ columns = ['pca_mfcc_delta_'+ str(i) for i in range(pipeline[1].n_components_)]
 df_dev_extracted = pd.DataFrame(extracted_pca_dev, columns=columns)
 df_eval_extracted = pd.DataFrame(extracted_pca_eval, columns=columns)
 
-sort_dataFrame(dev_data, df_dev_extracted).to_csv('../data/mfcc_delta_data/dev_mfcc_delta.csv', index=False)
-sort_dataFrame(eval_data, df_eval_extracted).to_csv('../data/mfcc_delta_data/eval_mfcc_delta.csv', index=False)
+sort_dataFrame(dev_data, df_dev_extracted).to_csv('main/data/mfcc_delta_data/dev_mfcc_delta.csv', index=False)
+sort_dataFrame(eval_data, df_eval_extracted).to_csv('main/data/mfcc_delta_data/eval_mfcc_delta.csv', index=False)
