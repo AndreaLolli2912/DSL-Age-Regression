@@ -66,10 +66,11 @@ def extract_audio_features(folder_path):
         features = get_audio_features(file_path=file_path)
         results[file_name] = features
 
-    location_path = f"data/audio_features_{folder_path.split('_')[-1]}.h5"
+    location_path = f"main/data/audio_features_{folder_path.split('_')[-1]}.h5"
     save_dict_to_hdf5(dictionary=results, file_path=location_path)
     print(f"Feature extraction complete. Results saved to {location_path}")
 
 if __name__ == "__main__":
-    extract_audio_features(folder_path="main/data/audios_development")
     extract_audio_features(folder_path="main/data/audios_evaluation")
+    extract_audio_features(folder_path="main/data/audios_development")
+    
