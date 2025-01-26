@@ -15,7 +15,6 @@ def reduce_noise(y, sr):
     -------
         y: Noise-reduced audio signal.
     """
-    # Apply noise reduction (non-stationary noise reduction by default)
     y = nr.reduce_noise(y=y, sr=sr, stationary=False)
     return y
 
@@ -102,21 +101,21 @@ def process_audio(y, sr, lowcut=40, highcut=12000, top_db=30):
     -------
         y: Processed audio signal after noise reduction , filtering and silence removal.
     """
-    # Step 2: Reduce noise
+    # Reduce noise
     try:
         y_noise = reduce_noise(y=y, sr=sr)
     except:
         print("Failed: {reduce_noise(y=y_emphasized, sr=sr)}")
         y_noise = y
     
-    # Step 2: Apply band-pass filter
+    # Apply band-pass filter
     try:
         y_filter = bandpass_filter(y=y_noise, sr=sr, lowcut=lowcut, highcut=highcut)
     except:
         print("Failed: {bandpass_filter(y=y_noise, sr=sr, lowcut=lowcut, highcut=highcut)}")
         y_filter = y_noise
 
-    # Step 3: Remove leading, trailing and internal silences
+    # Remove leading, trailing and internal silences
     try:
         y_silence = cut_silences(y=y_filter, sr=sr, top_db=top_db)
     except:

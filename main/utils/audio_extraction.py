@@ -4,19 +4,14 @@ from audio_preprocessing import process_audio
 import librosa
     
 def get_audio_features(file_path):
-
-    # Load the audio file
+    
     y, sr = librosa.load(file_path, sr=None)
-
-    # Apply noise removal, band-pass filtering and silence removal
     y_processed = process_audio(y=y, sr=sr)
     
-    # Precompute reusable components
     D = librosa.stft(y_processed)
     magnitude, phase = librosa.magphase(D)
     stft_power = magnitude**2
     
-    # Compute relevant features
     melspectogram = librosa.feature.melspectrogram(S=stft_power, sr=sr)
     mfcc = librosa.feature.mfcc(S=librosa.power_to_db(melspectogram), sr=sr)
     delta_mfcc = librosa.feature.delta(mfcc)
@@ -27,24 +22,22 @@ def get_audio_features(file_path):
     spectral_contrast = librosa.feature.spectral_contrast(S=magnitude, sr=sr)
     spectral_flatness = librosa.feature.spectral_flatness(S=magnitude)
     spectral_rolloff = librosa.feature.spectral_rolloff(S=magnitude, sr=sr)
-    zero_crossing_rate = librosa.feature.zero_crossing_rate(y)
+    zero_crossing_rate = librosa.feature.zero_crossing_rate(y_processed)
+    f0 = librosa.yin(y=y_processed, sr=sr, fmin=40, fmax=11025)
 
-    features = {
-        "melspectrogram": melspectogram,
-        "mfcc": mfcc,
-        "delta_mfcc": delta_mfcc,
-        "delta2_mfcc": delta2_mfcc,
-        "spectral_contrast": spectral_contrast,
-        "rms": rms,
-        "spectral_centroid": spectral_centroid,
-        "spectral_bandwidth": spectral_bandwidth,
-        "spectral_flatness": spectral_flatness,
-        "spectral_rolloff": spectral_rolloff,
-        "zero_crossing_rate": zero_crossing_rate,
-        
-    }
+    features = {"melspectrogram": melspectogram,
+                "mfcc": mfcc, 
+                "delta_mfcc": delta_mfcc,
+                "delta2_mfcc": delta2_mfcc,
+                "spectral_contrast": spectral_contrast,
+                "rms": rms,
+                "spectral_centroid": spectral_centroid,
+                "spectral_bandwidth": spectral_bandwidth,
+                "spectral_flatness": spectral_flatness,
+                "spectral_rolloff": spectral_rolloff,
+                "zero_crossing_rate": zero_crossing_rate,
+                "f0": f0}
     
-    # Return the features
     return features
 
 def extract_audio_features(folder_path):
@@ -60,7 +53,6 @@ def extract_audio_features(folder_path):
         
         file_path = f"{folder_path}/{file_name}"
         
-        # Display progress
         print(f"Processing file {i + 1}/{total_files}: {file_name}")
         
         features = get_audio_features(file_path=file_path)

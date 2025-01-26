@@ -188,7 +188,7 @@ def compute_audio_feature_stats(audio_data):
         for feature_name, feature_data in file_data.items():
 
             # ---------------------------
-            # A) SPECTRAL DATA & RMS (1, n)
+            # A) SPECTRAL DATA & RMS & f0 (1, n)
             # ---------------------------
             if feature_data.shape[0] == 1:
                 stats_values = get_summary_statistics(feature_data.flatten())

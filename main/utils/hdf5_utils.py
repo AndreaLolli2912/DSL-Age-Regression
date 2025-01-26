@@ -2,12 +2,6 @@ import h5py
 import numpy as np
 
 def save_dict_to_hdf5(dictionary, file_path):
-    """
-    Saves a dictionary as an HDF5 file.
-
-    :param dictionary: The dictionary to save.
-    :param file_path: The file path where the HDF5 file will be saved.
-    """
     try:
         with h5py.File(file_path, 'w') as hdf5_file:
             for key, value in dictionary.items():
@@ -19,12 +13,6 @@ def save_dict_to_hdf5(dictionary, file_path):
         print(f"An error occurred while saving the dictionary: {e}")
 
 def read_hdf5_to_dict(file_path):
-    """
-    Reads an HDF5 file into a dictionary.
-
-    :param file_path: Path to the HDF5 file.
-    :return: A dictionary containing the data.
-    """
     try:
         result = {}
         with h5py.File(file_path, 'r') as hdf5_file:
