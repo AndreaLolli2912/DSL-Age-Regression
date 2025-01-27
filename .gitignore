@@ -5,3 +5,4 @@ __pycache__/
 .env
 submissions/
 catboost_info/
+figs/
