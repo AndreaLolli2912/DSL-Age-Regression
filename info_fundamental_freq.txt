@@ -19,10 +19,10 @@ np.nanmean will do this automatically for you when using the default setting of 
 
 https://medium.com/@neurodatalab/pitch-tracking-or-how-to-estimate-the-fundamental-frequency-in-speech-on-the-examples-of-praat-fe0ca50f61fd
 
-efore applying time-domain methods, the signal is filtered in order to leave only low frequencies. 
+before applying time-domain methods, the signal is filtered in order to leave only low frequencies. 
 The thresholds are set: minimum and maximum frequencies, for example, from 75 to 500 Hz. 
 F0 estimation is only conducted for harmoniс speech.
 
 --------------------------------------------
 Sulla diminuzione della F0 media con l'età:
-Tracking age-related changes in voice and speech production with Landmark-based analysis of speech
+Age-Related Changes in Acoustic Characteristics of Adult Speech
