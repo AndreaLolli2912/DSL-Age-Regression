@@ -24,10 +24,6 @@ def get_audio_features(file_path):
     spectral_rolloff = librosa.feature.spectral_rolloff(S=magnitude, sr=sr)
     zero_crossing_rate = librosa.feature.zero_crossing_rate(y_processed)
     f0 = librosa.yin(y=y_processed, sr=sr, fmin=65, fmax=2093)
-<<<<<<< HEAD
-=======
-
->>>>>>> 748f28ebfc43d5922543104a6a3994c7ffe78110
 
     features = {"melspectrogram": melspectogram,
                 "mfcc": mfcc, 
