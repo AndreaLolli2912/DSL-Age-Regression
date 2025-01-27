@@ -54,7 +54,7 @@ def get_weighted_mean_freq(S, sr=22050, fmin=0.0, fmax=None):
 
     # Partition the spectrogram into low, mid, and high subsets
     low_s = S[low_bin, :]
-    mid_low_s = S[mid_low_bin]   
+    mid_low_s = S[mid_low_bin, :]   
     mid_s = S[mid_bin, :]
     mid_high_s = S[mid_high_bin, :]
     high_s = S[high_bin, :]   
@@ -187,6 +187,9 @@ def compute_audio_feature_stats(audio_data):
         # ---------------------------------------------------
         for feature_name, feature_data in file_data.items():
 
+            # ---------------------------
+            # A) Fundamental Freequency (m, )
+            # ---------------------------
             if feature_name == "f0":
                 stats_values = get_summary_statistics(feature_data.flatten())
                 # Create dict: e.g. {"f0_mean": val, "f0_std": val, ...}
@@ -203,7 +206,7 @@ def compute_audio_feature_stats(audio_data):
                     else:
                         fundamental_freq_dict[key].append(val)
             # ---------------------------
-            # A) SPECTRAL DATA & RMS & f0 (1, n)
+            # B) SPECTRAL DATA & RMS  (1, n)
             # ---------------------------
             elif feature_data.shape[0] == 1:
                 stats_values = get_summary_statistics(feature_data.flatten())
