@@ -18,7 +18,7 @@ def reduce_noise(y, sr):
     y = nr.reduce_noise(y=y, sr=sr, stationary=False)
     return y
 
-def bandpass_filter(y, sr, lowcut=40, highcut=12000):
+def bandpass_filter(y, sr, lowcut=45, highcut=11025):
     """
     Apply a band-pass filter to retain frequencies within a specific range.
     
@@ -49,7 +49,7 @@ def bandpass_filter(y, sr, lowcut=40, highcut=12000):
     y_filter = librosa.istft(D_filtered)
     return y_filter
 
-def cut_silences(y, sr, top_db=60):
+def cut_silences(y, sr, top_db=45):
     """
     Remove leading, trailing, and internal silences from an audio signal using a top_db threshold.
 
@@ -85,7 +85,7 @@ def cut_silences(y, sr, top_db=60):
 
     return y_no_pauses
 
-def process_audio(y, sr, lowcut=40, highcut=12000, top_db=60):
+def process_audio(y, sr, lowcut=40, highcut=11025, top_db=45):
     """
     Process audio by applying noise reduction, band-pass filtering and silence removal.
 
