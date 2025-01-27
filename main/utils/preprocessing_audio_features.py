@@ -153,7 +153,6 @@ def compute_audio_feature_stats(audio_data):
         A list of four dictionaries: [spectral_dict, melspectrogram_dict, mfcc_deltas_dict, spectral_contrast_dict].
         Each dictionary has keys like 'file_name' plus statistic-specific keys.
     """
-
     summary_statistics = ["mean", "std", "kurtosis", "skew"]
     freq_bands_means = [
         "low_mean_freq",
@@ -169,9 +168,10 @@ def compute_audio_feature_stats(audio_data):
     melspectrogram_dict = {"file_name": []}
     mfcc_deltas_dict = {"file_name": []}
     spectral_contrast_dict = {"file_name": []}
+    fundamental_freq_dict = {"file_name": []}
 
     # Collect them in a list to simplify adding file names
-    results = [spectral_dict, melspectrogram_dict, mfcc_deltas_dict, spectral_contrast_dict]
+    results = [spectral_dict, melspectrogram_dict, mfcc_deltas_dict, spectral_contrast_dict, fundamental_freq_dict]
 
     # -------------------------------------------------------
     # 1) Iterate over each audio file
@@ -187,10 +187,25 @@ def compute_audio_feature_stats(audio_data):
         # ---------------------------------------------------
         for feature_name, feature_data in file_data.items():
 
+            if feature_name == "f0":
+                stats_values = get_summary_statistics(feature_data.flatten())
+                # Create dict: e.g. {"f0_mean": val, "f0_std": val, ...}
+                summary_statistics_f0 = ["mean", "std", "kurtosis", "skew", "median", "min", "max"]
+                stats_values = tuple(list(stats_values) + [np.median(feature_data), np.min(feature_data), np.max(feature_data)])
+                statistical_summary = {
+                    f"fundamental_frequency_{stat}": val
+                    for stat, val in zip(summary_statistics_f0, stats_values)
+                }
+                # Store in spectral_dict
+                for key, val in statistical_summary.items():
+                    if key not in fundamental_freq_dict:
+                        fundamental_freq_dict[key] = [val]
+                    else:
+                        fundamental_freq_dict[key].append(val)
             # ---------------------------
             # A) SPECTRAL DATA & RMS & f0 (1, n)
             # ---------------------------
-            if feature_data.shape[0] == 1:
+            elif feature_data.shape[0] == 1:
                 stats_values = get_summary_statistics(feature_data.flatten())
                 # Create dict: e.g. {"spectral_rms_mean": val, "spectral_rms_std": val, ...}
                 statistical_summary = {
