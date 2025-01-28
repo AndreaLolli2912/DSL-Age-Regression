@@ -6,3 +6,4 @@ __pycache__/
 submissions/
 catboost_info/
 figs/
+cross_validate/
