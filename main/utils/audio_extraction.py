@@ -3,10 +3,10 @@ from hdf5_utils import save_dict_to_hdf5
 from audio_preprocessing import process_audio
 import librosa
     
-def get_audio_features(file_path):
+def get_audio_features(file_path, lowcut, highcut, top_db):
     
     y, sr = librosa.load(file_path, sr=None)
-    y_processed = process_audio(y=y, sr=sr)
+    y_processed = process_audio(y=y, sr=sr, lowcut=lowcut, highcut=highcut, top_db=top_db)
     
     D = librosa.stft(y_processed)
     magnitude, phase = librosa.magphase(D)
@@ -40,7 +40,7 @@ def get_audio_features(file_path):
     
     return features
 
-def extract_audio_features(folder_path):
+def extract_audio_features(folder_path, lowcut, highcut, top_db):
 
     file_names = os.listdir(folder_path)
     file_names.sort(key= lambda x: int(x.split(".")[0]))
@@ -55,7 +55,7 @@ def extract_audio_features(folder_path):
         
         print(f"Processing file {i + 1}/{total_files}: {file_name}")
         
-        features = get_audio_features(file_path=file_path)
+        features = get_audio_features(file_path=file_path, lowcut=lowcut, highcut=highcut, topdb=top_db)
         results[file_name] = features
 
     location_path = f"main/data/audio_features_{folder_path.split('_')[-1]}.h5"
@@ -63,6 +63,5 @@ def extract_audio_features(folder_path):
     print(f"Feature extraction complete. Results saved to {location_path}")
 
 if __name__ == "__main__":
-    extract_audio_features(folder_path="main/data/audios_evaluation")
-    extract_audio_features(folder_path="main/data/audios_development")
-    
+    extract_audio_features(folder_path="main/data/audios_evaluation", lowcut=40, highcut=11025, top_db=35)
+    extract_audio_features(folder_path="main/data/audios_development", lowcut=40, highcut=11025, top_db=35)
