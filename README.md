@@ -77,7 +77,7 @@ DSL-Age-Estimation
 
 ## Credits
 
-- Developed by [@YourGitHubUsername] in collaboration with [@CoStudentGitHubUsername].  
+- Developed by [@AndreaLolli2912](https://github.com/AndreaLolli2912) in collaboration with [@danielefam](https://github.com/danielefam).  
 - For full technical details, please refer to our [report](./Fama_Lolli_Age_Regression.pdf).
 
-Enjoy experimenting with **DSL-Age-Estimation**! Feel free to open issues or submit pull requests for improvements.
+Feel free to open issues or submit pull requests for improvements.
