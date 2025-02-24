@@ -20,7 +20,7 @@ For a detailed description of the methods, refer to the accompanying [report](./
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/YourGitHubUsername/DSL-Age-Estimation.git
+   git clone https://github.com/AndreaLolli2912/DSL-Age-Estimation.git
    cd DSL-Age-Estimation
    ```
 2. Install dependencies:
